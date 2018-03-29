@@ -11,22 +11,26 @@ namespace SF.Listeners.People.Services
 {
     public class NameService : IServiceEndpoint, INameService
     {
+        private readonly IDiagnosticsTracer _tracer;
         private readonly List<string> _names;
 
-        public NameService()
+        public NameService(IDiagnosticsTracer tracer)
         {
+            _tracer = tracer;
             _names = new List<string>();
         }
 
         public Task AddName(string name)
         {
             _names.Add(name);
+            _tracer.Trace($"Name added: {name}");
 
             return Task.CompletedTask;
         }
 
         public Task<string[]> GetAllNames()
         {
+            _tracer.Trace("All names requested");
             return Task.FromResult(_names.ToArray());
         }
 

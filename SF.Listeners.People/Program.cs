@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Runtime;
 using SF.Listeners.People.Contracts;
+using SF.Listeners.People.Services;
 using SimpleInjector;
 
 namespace SF.Listeners.People
@@ -22,6 +23,7 @@ namespace SF.Listeners.People
                 var container = new Container();
 
                 container.RegisterCollection(typeof(IServiceEndpoint), assemblies);
+                container.Register(typeof(IDiagnosticsTracer), typeof(DiagnosticsTracer));
 
                 container.Verify();
 
